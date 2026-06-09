@@ -22,8 +22,8 @@ roughness = 0.8
 albedo_color = Color(1.0, 0.85, 0.0, 1)
 roughness = 0.7
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_halfpipe"]
-albedo_color = Color(0.42, 0.42, 0.45, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_back"]
+albedo_color = Color(0.38, 0.38, 0.4, 1)
 roughness = 0.9
 
 [sub_resource type="BoxMesh" id="BoxMesh_ground"]
@@ -32,11 +32,18 @@ size = Vector3(80, 0.4, 80)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
 size = Vector3(80, 0.4, 80)
 
-[sub_resource type="BoxMesh" id="BoxMesh_qp_base"]
-size = Vector3(8, 3.5, 6)
+[sub_resource type="PrismMesh" id="PrismMesh_ramp"]
+left_to_right = 0.5
+size = Vector3(8, 3.5, 7)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qp_base"]
-size = Vector3(8, 3.5, 6)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ramp_slope"]
+size = Vector3(8, 0.4, 7.77)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ramp_back"]
+size = Vector3(8, 3.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ramp_back"]
+size = Vector3(8, 3.5, 0.3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_qp_lip"]
 size = Vector3(8, 0.25, 0.4)
@@ -68,18 +75,6 @@ size = Vector3(5.2, 0.12, 0.12)
 [sub_resource type="BoxShape3D" id="BoxShape3D_funbox_ledge"]
 size = Vector3(5.2, 0.12, 0.12)
 
-[sub_resource type="BoxMesh" id="BoxMesh_hp_wall"]
-size = Vector3(12, 4, 0.4)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hp_wall"]
-size = Vector3(12, 4, 0.4)
-
-[sub_resource type="BoxMesh" id="BoxMesh_hp_floor"]
-size = Vector3(12, 0.3, 5)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hp_floor"]
-size = Vector3(12, 0.3, 5)
-
 [sub_resource type="BoxMesh" id="BoxMesh_stripe"]
 size = Vector3(80, 0.01, 0.3)
 
@@ -98,18 +93,29 @@ shape = SubResource("BoxShape3D_ground")
 [node name="QuarterPipe" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
 
-[node name="Base" type="StaticBody3D" parent="QuarterPipe"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
-
-[node name="Mesh" type="MeshInstance3D" parent="QuarterPipe/Base"]
-mesh = SubResource("BoxMesh_qp_base")
+[node name="RampMesh" type="MeshInstance3D" parent="QuarterPipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 3.5)
+mesh = SubResource("PrismMesh_ramp")
 surface_material_override/0 = SubResource("StandardMaterial3D_ramp")
 
-[node name="Collision" type="CollisionShape3D" parent="QuarterPipe/Base"]
-shape = SubResource("BoxShape3D_qp_base")
+[node name="RampSlope" type="StaticBody3D" parent="QuarterPipe"]
+transform = Transform3D(1, 0, 0, 0, 0.4462, 0.895, 0, -0.895, 0.4462, 0, 1.75, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="QuarterPipe/RampSlope"]
+shape = SubResource("BoxShape3D_ramp_slope")
+
+[node name="RampBack" type="StaticBody3D" parent="QuarterPipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -3.65)
+
+[node name="BackMesh" type="MeshInstance3D" parent="QuarterPipe/RampBack"]
+mesh = SubResource("BoxMesh_ramp_back")
+surface_material_override/0 = SubResource("StandardMaterial3D_back")
+
+[node name="BackCollision" type="CollisionShape3D" parent="QuarterPipe/RampBack"]
+shape = SubResource("BoxShape3D_ramp_back")
 
 [node name="Lip" type="StaticBody3D" parent="QuarterPipe"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.625, -2.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.625, -3.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="QuarterPipe/Lip"]
 mesh = SubResource("BoxMesh_qp_lip")
@@ -121,18 +127,29 @@ shape = SubResource("BoxShape3D_qp_lip")
 [node name="QuarterPipe2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -18)
 
-[node name="Base" type="StaticBody3D" parent="QuarterPipe2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
-
-[node name="Mesh" type="MeshInstance3D" parent="QuarterPipe2/Base"]
-mesh = SubResource("BoxMesh_qp_base")
+[node name="RampMesh" type="MeshInstance3D" parent="QuarterPipe2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 3.5)
+mesh = SubResource("PrismMesh_ramp")
 surface_material_override/0 = SubResource("StandardMaterial3D_ramp")
 
-[node name="Collision" type="CollisionShape3D" parent="QuarterPipe2/Base"]
-shape = SubResource("BoxShape3D_qp_base")
+[node name="RampSlope" type="StaticBody3D" parent="QuarterPipe2"]
+transform = Transform3D(1, 0, 0, 0, 0.4462, 0.895, 0, -0.895, 0.4462, 0, 1.75, 0)
+
+[node name="Collision" type="CollisionShape3D" parent="QuarterPipe2/RampSlope"]
+shape = SubResource("BoxShape3D_ramp_slope")
+
+[node name="RampBack" type="StaticBody3D" parent="QuarterPipe2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -3.65)
+
+[node name="BackMesh" type="MeshInstance3D" parent="QuarterPipe2/RampBack"]
+mesh = SubResource("BoxMesh_ramp_back")
+surface_material_override/0 = SubResource("StandardMaterial3D_back")
+
+[node name="BackCollision" type="CollisionShape3D" parent="QuarterPipe2/RampBack"]
+shape = SubResource("BoxShape3D_ramp_back")
 
 [node name="Lip" type="StaticBody3D" parent="QuarterPipe2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.625, -2.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.625, -3.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="QuarterPipe2/Lip"]
 mesh = SubResource("BoxMesh_qp_lip")
