@@ -74,7 +74,7 @@ debug_shape_custom_color = Color(0.658824, 1, 0, 1)
 visible = false
 
 [node name="ScooterModel" parent="CharacterRotationRoot" unique_id=9900010 instance=ExtResource("8_scooter")]
-transform = Transform3D(-0.55, 0, 0, 0, 0.55, 0, 0, 0, -0.55, 0, 0.55, 0)
+transform = Transform3D(110, 0, 0, 0, 110, 0, 0, 0, 110, 0, 0, 0)
 
 [node name="TrickSystem" type="Node" parent="." unique_id=9900001]
 script = ExtResource("5_tricksy")
