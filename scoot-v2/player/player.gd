@@ -15,6 +15,7 @@ extends CharacterBody3D
 @onready var _step_sound: AudioStreamPlayer3D = $StepSound
 @onready var _landing_sound: AudioStreamPlayer3D = $LandingSound
 @onready var _trick_system: TrickSystem = $TrickSystem
+@onready var _trick_animations: Node = $TrickAnimations
 @onready var _hud: Node = $HUD
 
 @onready var _move_direction := Vector3.ZERO
@@ -30,6 +31,11 @@ func _ready() -> void:
 	_camera_controller.setup(self)
 	_character_skin.stepped.connect(play_foot_step_sound)
 	_hud.setup(_trick_system)
+	_trick_system.trick_performed.connect(_on_trick_performed)
+
+
+func _on_trick_performed(trick_name: String, _points: int, _combo_mult: int) -> void:
+	_trick_animations.play(trick_name)
 
 
 func _unhandled_input(event: InputEvent) -> void:

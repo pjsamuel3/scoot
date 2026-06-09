@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://c0mo8tek77du4" path="res://player/character_skin.tscn" id="4_ign62"]
 [ext_resource type="Script" path="res://player/trick_system.gd" id="5_tricksy"]
 [ext_resource type="PackedScene" path="res://player/hud.tscn" id="6_hud"]
+[ext_resource type="Script" uid="uid://wgmqdi8e8at8" path="res://player/trick_animations.gd" id="7_trickanim"]
+[ext_resource type="PackedScene" uid="uid://dvandfdyo2b" path="res://models/kick_scooter.glb" id="8_scooter"]
 [ext_resource type="AudioStream" uid="uid://bx0t7f2nuk2lr" path="res://player/sounds/03_step_grass_03.wav" id="10_wx4h4"]
 [ext_resource type="AudioStream" uid="uid://cbcb2d63weegs" path="res://player/sounds/45_landing_01.wav" id="11_3s4i7"]
 
@@ -69,9 +71,17 @@ debug_shape_custom_color = Color(0.658824, 1, 0, 1)
 [node name="CharacterRotationRoot" type="Node3D" parent="." unique_id=1616488823]
 
 [node name="CharacterSkin" parent="CharacterRotationRoot" unique_id=84269285 instance=ExtResource("4_ign62")]
+visible = false
+
+[node name="ScooterModel" parent="CharacterRotationRoot" unique_id=9900010 instance=ExtResource("8_scooter")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
 
 [node name="TrickSystem" type="Node" parent="." unique_id=9900001]
 script = ExtResource("5_tricksy")
+
+[node name="TrickAnimations" type="Node" parent="." unique_id=9900003]
+script = ExtResource("7_trickanim")
+rotation_root_path = NodePath("../CharacterRotationRoot")
 
 [node name="HUD" parent="." unique_id=9900002 instance=ExtResource("6_hud")]
 
