@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://vmbppkwmx2xk"]
+
+[ext_resource type="Sky" uid="uid://jonn5eom7asv" path="res://environment/sky/blue_sky.tres" id="1_sky"]
+[ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://environments/skate_park.tscn" id="3_park"]
+[ext_resource type="AudioStream" uid="uid://bveh08m6w5ryf" path="res://level/music/mountain.mp3" id="4_music"]
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = ExtResource("1_sky")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_exposure = 0.95
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_deathplane"]
+size = Vector3(200, 2, 200)
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 20, 0)
+light_color = Color(1, 0.96, 0.92, 1)
+light_energy = 1.8
+shadow_enabled = true
+
+[node name="SkatePark" parent="." instance=ExtResource("3_park")]
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 10)
+
+[node name="DeathPlane" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DeathPlane"]
+shape = SubResource("BoxShape3D_deathplane")
+
+[node name="StageMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_music")
+autoplay = true
+volume_db = -6.0

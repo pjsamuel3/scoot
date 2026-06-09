@@ -1,0 +1,225 @@
+[gd_scene format=3 uid="uid://scoot_skatepark_001"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_concrete"]
+albedo_color = Color(0.55, 0.55, 0.55, 1)
+roughness = 0.95
+metallic = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ramp"]
+albedo_color = Color(0.48, 0.48, 0.5, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rail"]
+albedo_color = Color(0.7, 0.7, 0.75, 1)
+roughness = 0.3
+metallic = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_funbox"]
+albedo_color = Color(0.9, 0.45, 0.1, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_stripe"]
+albedo_color = Color(1.0, 0.85, 0.0, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_halfpipe"]
+albedo_color = Color(0.42, 0.42, 0.45, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+size = Vector3(80, 0.4, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(80, 0.4, 80)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qp_base"]
+size = Vector3(8, 3.5, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qp_base"]
+size = Vector3(8, 3.5, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qp_lip"]
+size = Vector3(8, 0.25, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qp_lip"]
+size = Vector3(8, 0.25, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rail_bar"]
+size = Vector3(0.12, 0.12, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rail_bar"]
+size = Vector3(0.12, 0.12, 8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rail_leg"]
+size = Vector3(0.1, 0.6, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rail_leg"]
+size = Vector3(0.1, 0.6, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_funbox"]
+size = Vector3(5, 1.0, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_funbox"]
+size = Vector3(5, 1.0, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_funbox_ledge"]
+size = Vector3(5.2, 0.12, 0.12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_funbox_ledge"]
+size = Vector3(5.2, 0.12, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hp_wall"]
+size = Vector3(12, 4, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hp_wall"]
+size = Vector3(12, 4, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hp_floor"]
+size = Vector3(12, 0.3, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hp_floor"]
+size = Vector3(12, 0.3, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_stripe"]
+size = Vector3(80, 0.01, 0.3)
+
+[node name="SkatePark" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_ground")
+surface_material_override/0 = SubResource("StandardMaterial3D_concrete")
+
+[node name="Collision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="QuarterPipe" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+
+[node name="Base" type="StaticBody3D" parent="QuarterPipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="QuarterPipe/Base"]
+mesh = SubResource("BoxMesh_qp_base")
+surface_material_override/0 = SubResource("StandardMaterial3D_ramp")
+
+[node name="Collision" type="CollisionShape3D" parent="QuarterPipe/Base"]
+shape = SubResource("BoxShape3D_qp_base")
+
+[node name="Lip" type="StaticBody3D" parent="QuarterPipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.625, -2.8)
+
+[node name="Mesh" type="MeshInstance3D" parent="QuarterPipe/Lip"]
+mesh = SubResource("BoxMesh_qp_lip")
+surface_material_override/0 = SubResource("StandardMaterial3D_rail")
+
+[node name="Collision" type="CollisionShape3D" parent="QuarterPipe/Lip"]
+shape = SubResource("BoxShape3D_qp_lip")
+
+[node name="QuarterPipe2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -18)
+
+[node name="Base" type="StaticBody3D" parent="QuarterPipe2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="QuarterPipe2/Base"]
+mesh = SubResource("BoxMesh_qp_base")
+surface_material_override/0 = SubResource("StandardMaterial3D_ramp")
+
+[node name="Collision" type="CollisionShape3D" parent="QuarterPipe2/Base"]
+shape = SubResource("BoxShape3D_qp_base")
+
+[node name="Lip" type="StaticBody3D" parent="QuarterPipe2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.625, -2.8)
+
+[node name="Mesh" type="MeshInstance3D" parent="QuarterPipe2/Lip"]
+mesh = SubResource("BoxMesh_qp_lip")
+surface_material_override/0 = SubResource("StandardMaterial3D_rail")
+
+[node name="Collision" type="CollisionShape3D" parent="QuarterPipe2/Lip"]
+shape = SubResource("BoxShape3D_qp_lip")
+
+[node name="GrindRail" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="Bar" type="StaticBody3D" parent="GrindRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="GrindRail/Bar"]
+mesh = SubResource("BoxMesh_rail_bar")
+surface_material_override/0 = SubResource("StandardMaterial3D_rail")
+
+[node name="Collision" type="CollisionShape3D" parent="GrindRail/Bar"]
+shape = SubResource("BoxShape3D_rail_bar")
+
+[node name="Leg1" type="StaticBody3D" parent="GrindRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 3.5)
+
+[node name="Mesh" type="MeshInstance3D" parent="GrindRail/Leg1"]
+mesh = SubResource("BoxMesh_rail_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_rail")
+
+[node name="Collision" type="CollisionShape3D" parent="GrindRail/Leg1"]
+shape = SubResource("BoxShape3D_rail_leg")
+
+[node name="Leg2" type="StaticBody3D" parent="GrindRail"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -3.5)
+
+[node name="Mesh" type="MeshInstance3D" parent="GrindRail/Leg2"]
+mesh = SubResource("BoxMesh_rail_leg")
+surface_material_override/0 = SubResource("StandardMaterial3D_rail")
+
+[node name="Collision" type="CollisionShape3D" parent="GrindRail/Leg2"]
+shape = SubResource("BoxShape3D_rail_leg")
+
+[node name="FunBox" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 5)
+
+[node name="Body" type="StaticBody3D" parent="FunBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="FunBox/Body"]
+mesh = SubResource("BoxMesh_funbox")
+surface_material_override/0 = SubResource("StandardMaterial3D_funbox")
+
+[node name="Collision" type="CollisionShape3D" parent="FunBox/Body"]
+shape = SubResource("BoxShape3D_funbox")
+
+[node name="LedgeFront" type="StaticBody3D" parent="FunBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, 1.56)
+
+[node name="Mesh" type="MeshInstance3D" parent="FunBox/LedgeFront"]
+mesh = SubResource("BoxMesh_funbox_ledge")
+surface_material_override/0 = SubResource("StandardMaterial3D_rail")
+
+[node name="Collision" type="CollisionShape3D" parent="FunBox/LedgeFront"]
+shape = SubResource("BoxShape3D_funbox_ledge")
+
+[node name="LedgeBack" type="StaticBody3D" parent="FunBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06, -1.56)
+
+[node name="Mesh" type="MeshInstance3D" parent="FunBox/LedgeBack"]
+mesh = SubResource("BoxMesh_funbox_ledge")
+surface_material_override/0 = SubResource("StandardMaterial3D_rail")
+
+[node name="Collision" type="CollisionShape3D" parent="FunBox/LedgeBack"]
+shape = SubResource("BoxShape3D_funbox_ledge")
+
+[node name="Stripes" type="Node3D" parent="."]
+
+[node name="Stripe1" type="MeshInstance3D" parent="Stripes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, -10)
+mesh = SubResource("BoxMesh_stripe")
+surface_material_override/0 = SubResource("StandardMaterial3D_stripe")
+
+[node name="Stripe2" type="MeshInstance3D" parent="Stripes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, 0)
+mesh = SubResource("BoxMesh_stripe")
+surface_material_override/0 = SubResource("StandardMaterial3D_stripe")
+
+[node name="Stripe3" type="MeshInstance3D" parent="Stripes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, 10)
+mesh = SubResource("BoxMesh_stripe")
+surface_material_override/0 = SubResource("StandardMaterial3D_stripe")
